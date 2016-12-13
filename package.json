@@ -1,0 +1,27 @@
+{
+  "name": "orbit-native",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "ipfs-daemon": "^0.3.0-beta.10",
+    "orbit": "github:haadcode/orbit#feat/pubsub",
+    "orbit_": "0.1.0-beta.7",
+    "react": "15.4.1",
+    "react-native": "0.39.2",
+    "react-native-gifted-chat": "0.0.10",
+    "react-native-webrtc": "^0.54.3"
+  },
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
