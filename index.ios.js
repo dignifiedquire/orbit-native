@@ -1,7 +1,7 @@
-/**
- * @flow
- */
+/* @flow */
+'use strict'
 
+import './shim.js'
 import React, { Component } from 'react'
 import {
   AppRegistry,
@@ -20,11 +20,14 @@ window.RTCPeerConnection = RTCPeerConnection
 window.RTCSessionDescription = RTCSessionDescription
 window.RTCIceCandidate = RTCIceCandidate
 
+import connect from './connection.js'
+
 export default class Orbit extends Component {
   constructor (props) {
     super(props)
     this.state = {messages: []}
     this.onSend = this.onSend.bind(this)
+    connect()
   }
 
   componentWillMount () {

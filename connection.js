@@ -1,3 +1,6 @@
+/* @flow */
+'use strict'
+
 import IPFS from 'ipfs-daemon/src/ipfs-browser-daemon'
 import Orbit from 'orbit_'
 
@@ -32,7 +35,7 @@ const orbitSettings = {
   maxHistory: 64
 }
 
-export default function setup () {
+export default function setup (onMessage) {
   const ipfs = new IPFS(settings)
   ipfs.on('ready', () => {
     console.log('ready')
@@ -40,6 +43,7 @@ export default function setup () {
 
     orbit.events.on('connected', (network, user) => {
       console.log('connected', network, user)
+      join(orbit, onMessage)
     })
 
     orbit.events.on('disconnected', () => {
@@ -48,4 +52,23 @@ export default function setup () {
   })
 
   ipfs.on('error', (e) => console.error(e))
+}
+
+function join (orbit) {
+  orbit.join('ipfs').then((name) => {
+    console.log('joined %s', name)
+    const feed = orbit.channels[name].feed
+
+    feed.events.on('history', (name, messages) => {
+      console.log('got history', name, messages)
+      messages.forEach((m) => {
+        onMessage(m)
+      })
+    })
+  })
+
+  orbit.events.on('message', (channel, message) => {
+    console.log('message', channel, [message])
+    onMessage(message)
+  })
 }
